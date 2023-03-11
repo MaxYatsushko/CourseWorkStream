@@ -4,7 +4,7 @@ import com.example.courseworkstream.Employee;
 import com.example.courseworkstream.exception.EmployeeAlreadyAddedException;
 import com.example.courseworkstream.exception.EmployeeNotFoundException;
 import com.example.courseworkstream.exception.EmployeeStorageIsFullException;
-import com.example.courseworkstream.service.EmployeeService;
+import com.example.courseworkstream.service.EmployeeServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,29 +30,33 @@ import java.util.List;
          return String.format("%s %s", HttpStatus.NOT_FOUND.value(), e.getMessage());
      }
 
-     private final EmployeeService employeeService;
+     private final EmployeeServiceImpl employeeServiceImpl;
 
-     public EmployeeController(EmployeeService employeeService) {
-         this.employeeService = employeeService;
+     public EmployeeController(EmployeeServiceImpl employeeServiceImpl) {
+         this.employeeServiceImpl = employeeServiceImpl;
      }
 
      @GetMapping(path = "/add")
-     public Employee addEmployee(@RequestParam String firstName, @RequestParam String lastName) {
-         return employeeService.add(firstName, lastName);
+     public Employee addEmployee(
+             @RequestParam (name = "firstName") String firstName,
+             @RequestParam (name = "lastName") String lastName,
+             @RequestParam (name = "salary") float salary,
+             @RequestParam (name = "departmentId") int departmentId) {
+         return employeeServiceImpl.add(firstName, lastName, salary, departmentId);
      }
 
      @GetMapping(path = "/find")
      public Employee findEmployee(@RequestParam String firstName, @RequestParam String lastName) {
-         return employeeService.find(firstName, lastName);
+         return employeeServiceImpl.find(firstName, lastName);
      }
 
      @GetMapping(path = "/remove")
      public Employee removeEmployee(@RequestParam String firstName, @RequestParam String lastName) {
-         return employeeService.remove(firstName, lastName);
+         return employeeServiceImpl.remove(firstName, lastName);
      }
 
      @GetMapping(path = "/findAll")
      public List<Employee> getEmployees() {
-         return employeeService.getAll();
+         return employeeServiceImpl.getAll();
      }
 }
