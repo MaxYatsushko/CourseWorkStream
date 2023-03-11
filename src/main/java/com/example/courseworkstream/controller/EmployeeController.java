@@ -15,7 +15,7 @@ import java.util.List;
  public class EmployeeController {
 
      @ResponseStatus(HttpStatus.BAD_REQUEST)
-     @ExceptionHandler(EmployeeStorageIsFullException.class)
+     @ExceptionHandler({EmployeeStorageIsFullException.class})
      public String handleException(EmployeeStorageIsFullException e) {
          return String.format("%s %s", HttpStatus.BAD_REQUEST.value(), e.getMessage());
      }

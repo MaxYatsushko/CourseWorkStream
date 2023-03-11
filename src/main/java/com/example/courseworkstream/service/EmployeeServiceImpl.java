@@ -12,7 +12,6 @@ import static com.example.courseworkstream.Department.DEPARTMENT_BY_ID;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-
     private final int MAX_EMPLOYEES_COUNT = 10;
 
     private static final List<Employee> employees = new ArrayList<>();
