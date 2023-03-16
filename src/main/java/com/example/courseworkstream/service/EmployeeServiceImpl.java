@@ -61,6 +61,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee find(String firstName, String lastName) {
+
+        checkData(firstName, lastName);
+
         Employee employee = null;
 
         for (Employee e : employees)
@@ -77,6 +80,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee remove(String firstName, String lastName) {
+
        checkData(firstName, lastName);
 
        Employee employee = find(firstName, lastName);
