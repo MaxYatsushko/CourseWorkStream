@@ -4,6 +4,7 @@ import com.example.courseworkstream.Employee;
 import com.example.courseworkstream.exception.EmployeeAlreadyAddedException;
 import com.example.courseworkstream.exception.EmployeeNotFoundException;
 import com.example.courseworkstream.exception.EmployeeStorageIsFullException;
+import com.example.courseworkstream.exception.InvalidStringDataException;
 import com.example.courseworkstream.service.EmployeeServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ import java.util.List;
  public class EmployeeController {
 
      @ResponseStatus(HttpStatus.BAD_REQUEST)
-     @ExceptionHandler(EmployeeStorageIsFullException.class)
+     @ExceptionHandler({EmployeeStorageIsFullException.class})
      public String handleException(EmployeeStorageIsFullException e) {
          return String.format("%s %s", HttpStatus.BAD_REQUEST.value(), e.getMessage());
      }
@@ -28,6 +29,12 @@ import java.util.List;
      @ExceptionHandler(EmployeeNotFoundException.class)
      public String handleException(EmployeeNotFoundException e) {
          return String.format("%s %s", HttpStatus.NOT_FOUND.value(), e.getMessage());
+     }
+
+     @ResponseStatus(HttpStatus.BAD_REQUEST)
+     @ExceptionHandler(InvalidStringDataException.class)
+     public String handleException(InvalidStringDataException e) {
+         return String.format("%s %s", HttpStatus.BAD_REQUEST.value(), e.getMessage());
      }
 
      private final EmployeeServiceImpl employeeServiceImpl;

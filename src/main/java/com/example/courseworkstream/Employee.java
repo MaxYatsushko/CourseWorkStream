@@ -3,7 +3,6 @@ package com.example.courseworkstream;
 import java.util.Objects;
 
 public class Employee {
-
     private final String firstName;
     private final String lastName;
     private final float salary;

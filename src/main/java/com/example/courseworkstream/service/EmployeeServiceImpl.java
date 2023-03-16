@@ -4,6 +4,8 @@ import com.example.courseworkstream.Employee;
 import com.example.courseworkstream.exception.EmployeeAlreadyAddedException;
 import com.example.courseworkstream.exception.EmployeeStorageIsFullException;
 import com.example.courseworkstream.exception.EmployeeNotFoundException;
+import com.example.courseworkstream.exception.InvalidStringDataException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,7 +14,6 @@ import static com.example.courseworkstream.Department.DEPARTMENT_BY_ID;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-
     private final int MAX_EMPLOYEES_COUNT = 10;
 
     private static final List<Employee> employees = new ArrayList<>();
@@ -33,8 +34,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         employees.add(workerBuh);
         employees.add(workerBuh2);
         employees.add(workerIt1);
-        employees.add(workerIt2);
-        employees.add(workerIt3);
+        //add(workerIt2);
+        //employees.add(workerIt3);
         employees.add(workerGlobal1);
         employees.add(workerGlobal2);
         employees.add(workerGlobal1);
@@ -48,6 +49,8 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new EmployeeStorageIsFullException("Массив сотрудников переполнен", 777);
         }
 
+        checkData(firstName, lastName);
+
         Employee employee = new Employee(firstName, lastName, salary, DEPARTMENT_BY_ID.get(departmentId));
         if (employees.contains(employee))
             throw new EmployeeAlreadyAddedException("В массиве уже есть такой сотрудник", 888);
@@ -58,6 +61,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee find(String firstName, String lastName) {
+
+        checkData(firstName, lastName);
+
         Employee employee = null;
 
         for (Employee e : employees)
@@ -74,6 +80,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee remove(String firstName, String lastName) {
+
+       checkData(firstName, lastName);
+
        Employee employee = find(firstName, lastName);
 
        for (Employee e : employees)
@@ -86,5 +95,27 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getAll() {
        return employees;
+    }
+
+    private boolean isValidString(String localString){
+        return (StringUtils.isNotEmpty(localString) && StringUtils.isAlpha(localString));
+    }
+    private boolean isUpperCaseFisrtChar(String localString){
+        String firstElement = StringUtils.substring(localString, 0, 1);
+        return StringUtils.upperCase(firstElement) == firstElement;
+    }
+
+    private void checkData(String firstName, String lastName){
+        if(!isValidString(firstName))
+            throw new InvalidStringDataException("Имя сотрудника не может быть пустым и должно содержать только буквы", 333);
+
+        if(!isValidString(lastName))
+            throw new InvalidStringDataException("Фамилия сотрудника не может быть пустой и должна содержать только буквы", 333);
+
+        if (!isUpperCaseFisrtChar(firstName))
+            throw new InvalidStringDataException("Имя сотрудника должно начинаться с заглавной буквы", 222);
+
+        if (!isUpperCaseFisrtChar(lastName))
+            throw new InvalidStringDataException("Фамилия сотрудника должна начинаться с заглавной буквы", 222);
     }
 }
