@@ -6,6 +6,16 @@ GET http://localhost:8080/employee/add?firstName=Коля&lastName=Петров&
 ###
 GET http://localhost:8080/employee/add?firstName=Женя&lastName=Котляров&salary=100000&departmentId=1
 ###
+GET http://localhost:8080/employee/add?firstName=Женя1&lastName=Котляров&salary=100000&departmentId=1
+###
+GET http://localhost:8080/employee/add?firstName=Женя&lastName=Котляров2&salary=100000&departmentId=1
+###
+GET http://localhost:8080/employee/add?firstName=женя&lastName=Котляров&salary=100000&departmentId=1
+###
+GET http://localhost:8080/employee/add?firstName=Женя&lastName=котляров&salary=100000&departmentId=1
+###
+GET http://localhost:8080/employee/add?firstName=Женя&lastName=Кот ляров&salary=100000&departmentId=1
+###
 GET http://localhost:8080/employee/findAll
 ###
 GET http://localhost:8080/employee/find?firstName=Женя&lastName=Котляров
